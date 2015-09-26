@@ -25,6 +25,7 @@ class CreateFilterHandler(webapp2.RequestHandler):
         if (f == None and find != "" and name != ""):
             f2 = Filter(name=name, find=find, replace=replace, id=name)
             f2.put()
+            self.response.write(name);
         else:
             self.response.set_status(400)
             self.response.write("YOU FOOL! 400")
