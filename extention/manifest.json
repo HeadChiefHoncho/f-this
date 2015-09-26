@@ -9,7 +9,11 @@
   },
   "permissions": [
     "activeTab",
+    "tabs",
     "https://ajax.googleapis.com/"
   ],
+  "background": {
+    "scripts": ["findAndReplace.js"]
+  },
   "icons": { "16": "calculator-16.png", "128": "calculator-128.png" }
 }
