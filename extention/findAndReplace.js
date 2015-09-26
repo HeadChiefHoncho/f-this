@@ -1,12 +1,17 @@
-
+var originalRoot;
 
 function findAndReplace(find, replace) {
     // alert("find and replace called");
-    var root = document.body;
+    revert();
+    var root = document.body; // Cloning original root, so that new find & replace operates on original content
     // alert("now onto replacing");
     // alert(root.innerHTML);
     var findRegex = new RegExp(find);
     replaceText(findRegex, replace, root);
+}
+
+function revert() {
+    document.body = originalRoot.cloneNode(true);
 }
 
 function replaceText(findRegex, replace, node) {
@@ -20,7 +25,8 @@ function replaceText(findRegex, replace, node) {
 }
 
 $(document).ready(function() {
-   alert("loaded");
+   //alert("loaded");
+   originalRoot = document.body.cloneNode(true);
    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         switch(request.type) {
             case "find-and-replace":
@@ -29,6 +35,9 @@ $(document).ready(function() {
                 break;
             case "check-loaded":
                 sendResponse({type: "check-loaded", done: true});
+                break;
+            case "revert":
+                revert();
                 break;
         }
         return true;
