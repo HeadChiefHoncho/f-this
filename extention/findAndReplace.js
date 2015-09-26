@@ -1,8 +1,8 @@
 function findAndReplace(find, replace) {
-    alert("find and replace called");
+    // alert("find and replace called");
     var root = document.body;
-    alert("now onto replacing");
-    alert(root.innerHTML);
+    // alert("now onto replacing");
+    // alert(root.innerHTML);
     replaceText(find, replace, root);
 }
 
@@ -21,7 +21,7 @@ window.onload = function() {
    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         switch(request.type) {
             case "find-and-replace":
-                alert("message recieved");
+                // alert("message recieved");
                 findAndReplace(request.data.find, request.data.replace);
             break;
         }
