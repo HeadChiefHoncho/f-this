@@ -4,7 +4,7 @@
   "version": "0.1",
   "manifest_version": 2,
   "browser_action": {
-    "default_icon": "calculator-16.png",
+    "default_icon": "filter_16.png",
     "default_popup": "window.html"
   },
   "permissions": [
