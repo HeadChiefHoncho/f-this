@@ -11,7 +11,8 @@
     "activeTab",
     "tabs",
     "https://ajax.googleapis.com/",
-    "http://f-this.appspot.com/*"
+    "http://f-this.appspot.com/*",
+    "webNavigation"
   ],
   "content_scripts": [{
     "matches": ["<all_urls>"],

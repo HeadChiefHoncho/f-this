@@ -1,4 +1,8 @@
 
+var enableUI = function() {
+    document.getElementById('save').disabled = false;
+    document.getElementById('preview').disabled = false;
+}
 
 var preview = function() {
     var find = document.getElementById("find").value;
@@ -11,7 +15,7 @@ var preview = function() {
             }
         }
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, message)
+        chrome.tabs.sendMessage(tabs[0].id, message);
     });
 }
 
@@ -30,4 +34,12 @@ var saveFilter = function() {
 window.onload = function() {
     document.getElementById('save').addEventListener('click', saveFilter);
     document.getElementById('preview').addEventListener('click', preview);
+    var message = {type: "check-loaded", done: false};
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, message, function(response){
+            if(response.done){
+                enableUI();
+            }
+        });
+    });
 }

@@ -1,3 +1,5 @@
+
+
 function findAndReplace(find, replace) {
     // alert("find and replace called");
     var root = document.body;
@@ -17,15 +19,18 @@ function replaceText(findRegex, replace, node) {
     }
 }
 
-window.onload = function() {
+$(document).ready(function() {
    alert("loaded");
    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         switch(request.type) {
             case "find-and-replace":
                 // alert("message recieved");
                 findAndReplace(request.data.find, request.data.replace);
-            break;
+                break;
+            case "check-loaded":
+                sendResponse({type: "check-loaded", done: true});
+                break;
         }
         return true;
     });
-}
+});
