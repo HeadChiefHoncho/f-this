@@ -43,6 +43,28 @@ var preview = function() {
     });
 }
 
+var useSelectedFilter = function(data) {
+    var message = {
+            type: "find-and-replace",
+            data: {
+                find: data.find,
+                replace: data.replace
+            }
+        }
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, message);
+    });
+}
+
+var getSelectedFilter = function() {
+    return "i";
+}
+
+var onFilterSelected = function() {
+    var filter = getSelectedFilter();
+    $.get("http://f-this.appspot.com/getFilter", "?name=" + filter, useSelectedFilter, "json");
+}
+
 var success = function(newFilter) {
     document.getElementById('name').style.borderColor = null;
     var searchResultList = document.getElementById("search_result_list");
@@ -99,6 +121,7 @@ window.onload = function() {
     document.getElementById('revert').addEventListener('click', revert);
     document.getElementById('create_tab').addEventListener('click', showCreateTab);
     document.getElementById('search_tab').addEventListener('click', showSearchTab);
+    // document.getElementById('search_result_list').addEventListener('click', onFilterSelected);
     loadFilters();
     var message = {type: "check-loaded", done: false};
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
