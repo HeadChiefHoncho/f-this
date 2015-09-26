@@ -3,16 +3,17 @@ function findAndReplace(find, replace) {
     var root = document.body;
     // alert("now onto replacing");
     // alert(root.innerHTML);
-    replaceText(find, replace, root);
+    var findRegex = new RegExp(find);
+    replaceText(findRegex, replace, root);
 }
 
-function replaceText(find, replace, node) {
+function replaceText(findRegex, replace, node) {
     var children = node.childNodes;
     if (node.nodeType == 3) {
-        node.data = node.data.replace(find, replace);
+        node.data = node.data.replace(findRegex, replace);
     }
     for (var child in children) {
-        replaceText(find, replace, children[child]);
+        replaceText(findRegex, replace, children[child]);
     }
 }
 
