@@ -13,9 +13,9 @@
     "https://ajax.googleapis.com/",
     "http://f-this.appspot.com/*"
   ],
-  "background": {
-    "scripts": ["window.js"]
-  },
+  // "background": {
+  //   "scripts": ["window.js"]
+  // },
   "content_scripts": [{
     "matches": ["http://*/*"],
     "js": ["jquery-2.1.4.js", "findAndReplace.js"]
