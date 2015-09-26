@@ -10,10 +10,15 @@
   "permissions": [
     "activeTab",
     "tabs",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "http://f-this.appspot.com/*"
   ],
   "background": {
-    "scripts": ["findAndReplace.js"]
+    "scripts": ["window.js"]
   },
+  "content_scripts": [{
+    "matches": ["http://*/*"],
+    "js": ["jquery-2.1.4.js", "findAndReplace.js"]
+  }],
   "icons": { "16": "calculator-16.png", "128": "calculator-128.png" }
 }

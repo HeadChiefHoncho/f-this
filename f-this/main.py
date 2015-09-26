@@ -17,7 +17,7 @@ class GetFiltersHandler(webapp2.RequestHandler):
         self.response.write(json.dumps(jsonFilterNames))
 
 class CreateFilterHandler(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         name = self.request.get("name")
         find = self.request.get("find")
         replace = self.request.get("replace")
