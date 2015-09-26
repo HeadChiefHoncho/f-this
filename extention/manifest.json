@@ -20,5 +20,5 @@
     "matches": ["http://*/*"],
     "js": ["jquery-2.1.4.js", "findAndReplace.js"]
   }],
-  "icons": { "16": "calculator-16.png", "128": "calculator-128.png" }
+  "icons": { "16": "filter_16.png", "128": "filter_128.png" }
 }
