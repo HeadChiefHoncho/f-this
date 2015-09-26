@@ -1,0 +1,15 @@
+{
+  "name": "f-this",
+  "description": "Create filters for web pages",
+  "version": "0.1",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "calculator-16.png",
+    "default_popup": "window.html"
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/"
+  ],
+  "icons": { "16": "calculator-16.png", "128": "calculator-128.png" }
+}
