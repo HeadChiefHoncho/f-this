@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to change the background color of the document.</p>
+
+<button onclick="myFunction()">Yellow</button>
+
+<button onclick="revert()">Revert</button>
+
+<script>
+var originalRoot;
+
+function myFunction() {
+    originalRoot = document.body.cloneNode(true);
+    document.body.style.backgroundColor = "yellow";
+}
+
+function revert(){
+    document.body = originalRoot;
+}
+</script>
+
+</body>
+</html>

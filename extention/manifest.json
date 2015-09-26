@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "browser_action": {
     "default_icon": "filter_16.png",
-    "default_popup": "window.html"
+    "default_popup": "popup.html"
   },
   "permissions": [
     "activeTab",
@@ -16,7 +16,7 @@
   ],
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["jquery-2.1.4.js", "findAndReplace.js"],
+    "js": ["jquery-2.1.4.js", "injectedFunctions.js"],
     "all_frames": true
   }],
   "icons": { "16": "filter_16.png", "128": "filter_128.png" }

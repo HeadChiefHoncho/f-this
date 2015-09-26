@@ -1,17 +1,18 @@
-var originalRoot;
+// ----------------------------
+//     FUNCTION INJECTION
+// ----------------------------
+
+var originalBody;
 
 function findAndReplace(find, replace) {
-    // alert("find and replace called");
     revert();
-    var root = document.body; // Cloning original root, so that new find & replace operates on original content
-    // alert("now onto replacing");
-    // alert(root.innerHTML);
+    var root = document.body;
     var findRegex = new RegExp(find);
     replaceText(findRegex, replace, root);
 }
 
 function revert() {
-    document.body = originalRoot.cloneNode(true);
+    document.body = originalBody.cloneNode(true);
 }
 
 function replaceText(findRegex, replace, node) {
@@ -24,13 +25,15 @@ function replaceText(findRegex, replace, node) {
     }
 }
 
+// ----------------------------
+//            SETUP
+// ----------------------------
+
 $(document).ready(function() {
-   //alert("loaded");
-   originalRoot = document.body.cloneNode(true);
+   originalBody = document.body.cloneNode(true);
    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         switch(request.type) {
             case "find-and-replace":
-                // alert("message recieved");
                 findAndReplace(request.data.find, request.data.replace);
                 break;
             case "check-loaded":
