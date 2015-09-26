@@ -19,16 +19,31 @@ class GetFiltersHandler(webapp2.RequestHandler):
 class CreateFilterHandler(webapp2.RequestHandler):
     def get(self):
         name = self.request.get("name")
-        f = Filter(name=name, find="", replace="")
-        f.put()
+        find = self.request.get("find")
+        replace = self.request.get("replace")
+        f = ndb.Key(Filter, name).get()
+        if (f == None and find != "" and name != ""):
+            f2 = Filter(name=name, find=find, replace=replace, id=name)
+            f2.put()
+        else:
+            self.response.set_status(400)
+            self.response.write("YOU FOOL! 400")
 
 class GetFilterHandler(webapp2.RequestHandler):
     def get(self):
         name = self.request.get("name")
-        f = Filter.query(Filter.name == name).fetch(1)
-        jsonFilter = f[0].to_dict()
-        self.response.headers["Content-Type"] = "application/json"
-        self.response.write(json.dumps(jsonFilter))
+        if (name == ""):
+            self.response.set_status(400)
+            self.response.write("YOU FOOL! AGAIN! 400")
+            return
+        f = ndb.Key(Filter, name).get()
+        if (f != None):
+            jsonFilter = f.to_dict()
+            self.response.headers["Content-Type"] = "application/json"
+            self.response.write(json.dumps(jsonFilter))
+        else:
+            self.response.set_status(400)
+            self.response.write("YOU FOOL! AGAIN! 400")
 
 
 
