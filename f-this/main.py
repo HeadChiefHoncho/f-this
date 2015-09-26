@@ -10,11 +10,11 @@ class Filter(ndb.Model):
 class GetFiltersHandler(webapp2.RequestHandler):
     def get(self):
         filters = Filter.query().order(Filter.name).fetch()
-        jsonFilters = []
+        jsonFilterNames = []
         for f in filters:
-            jsonFilters.append(f.to_dict())
+            jsonFilterNames.append(f.name)
         self.response.headers["Content-Type"] = "application/json"
-        self.response.write(json.dumps(jsonFilters))
+        self.response.write(json.dumps(jsonFilterNames))
 
 class CreateFilterHandler(webapp2.RequestHandler):
     def get(self):
@@ -22,7 +22,18 @@ class CreateFilterHandler(webapp2.RequestHandler):
         f = Filter(name=name, find="", replace="")
         f.put()
 
+class GetFilterHandler(webapp2.RequestHandler):
+    def get(self):
+        name = self.request.get("name")
+        f = Filter.query(Filter.name == name).fetch(1)
+        jsonFilter = f[0].to_dict()
+        self.response.headers["Content-Type"] = "application/json"
+        self.response.write(json.dumps(jsonFilter))
+
+
+
 app = webapp2.WSGIApplication([
     ('/getFilters', GetFiltersHandler),
-    ('/createFilter', CreateFilterHandler)
+    ('/createFilter', CreateFilterHandler),
+    ('/getFilter', GetFilterHandler)
 ], debug=True)
