@@ -78,7 +78,12 @@ var onCreateFilterSuccess = function(newFilter) {
 // ----------------------------
 
 var loadFilters = function() {
-    $.get("http://f-this.appspot.com/getFilters", "", populateSearchResults, "json");
+    $.get("http://f-this.appspot.com/getFilters", "", populateFilters, "json");
+}
+
+var populateFilters = function(list) {
+    filterNames = list;
+    populateSearchResults(list);
 }
 
 var populateSearchResults = function(list) {
@@ -93,7 +98,6 @@ var populateSearchResults = function(list) {
         div.appendChild(document.createTextNode(list[l]));
         entry.appendChild(div);
         searchResultList.appendChild(entry);
-        filterNames.push(list[l]);
         div.addEventListener('click', getOnFilterSelected(list[l]));
     }
 }
@@ -139,7 +143,7 @@ window.onload = function() {
     document.getElementById('revert').addEventListener('click', revert);
     document.getElementById('create_tab').addEventListener('click', showCreateTab);
     document.getElementById('search_tab').addEventListener('click', showSearchTab);
-    document.getElementById('search_button').addEventListener('click', updateSearchResults);
+    document.getElementById('search_bar').addEventListener('input', updateSearchResults);
     loadFilters();
     var message = {type: "check-loaded", done: false};
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
