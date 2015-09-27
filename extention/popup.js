@@ -62,16 +62,19 @@ var saveFilter = function() {
     var url = "http://f-this.appspot.com/createFilter";
     $.ajax({
         type: "POST",
+        contentType: "application/json",
         url: url,
-        data: filter,
+        data: JSON.stringify(filter),
         success: onCreateFilterSuccess,
         error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
             document.getElementById('name').style.borderColor = "red";
         }
     });
 }
 
 var onCreateFilterSuccess = function(newFilter) {
+    console.log("success");
     document.getElementById('name').style.borderColor = null;
     var searchResultList = document.getElementById("search_result_list");
     var entry = document.createElement("li");
@@ -155,17 +158,27 @@ var enableUI = function() {
 var addInputElement = function() {
     var findReplaceItem = document.createElement('div');
     findReplaceItem.className = "find-replace-item";
-    var findReplace = document.createElement('div');
-    findReplace.className = "find-replace";
+
+    var findReplaceOne = document.createElement('div');
+    findReplaceOne.className = "find-replace";
     var find = document.createElement('input');
     find.type = "text";
+    find.placeholder = "find";
     find.id = "find_" + replaceInputs.length;
+    find.className = "form-control";
+
+    var findReplaceTwo = document.createElement('div');
+    findReplaceTwo.className = "find-replace";
     var replace = document.createElement('input');
     replace.type = "text";
+    replace.placeholder = "replace";
     replace.id = "replace_" + replaceInputs.length;
-    findReplace.appendChild(find);
-    findReplace.appendChild(replace);
-    findReplaceItem.appendChild(findReplace);
+    replace.className = "form-control";
+
+    findReplaceOne.appendChild(find);
+    findReplaceTwo.appendChild(replace);
+    findReplaceItem.appendChild(findReplaceOne);
+    findReplaceItem.appendChild(findReplaceTwo);
 
     findInputs.push(find);
     replaceInputs.push(replace);
@@ -174,19 +187,24 @@ var addInputElement = function() {
 
 var removeInputElement = function() {
     var container = document.getElementById("find-replace-inputs");
-    container.removeChild(container.childNodes[-1]);
+    if (findInputs.length <= 1) {
+        return;
+    }
+    container.removeChild(container.childNodes[container.childNodes.length - 1]);
     findInputs.pop();
     replaceInputs.pop();
 }
 
 window.onload = function() {
-    addInputElement();
     showCreateTab();
+    addInputElement();
     document.getElementById('save').addEventListener('click', saveFilter);
     document.getElementById('preview').addEventListener('click', preview);
     document.getElementById('revert').addEventListener('click', revert);
     document.getElementById('create_tab').addEventListener('click', showCreateTab);
     document.getElementById('search_tab').addEventListener('click', showSearchTab);
+    document.getElementById('add-input').addEventListener('click', addInputElement);
+    document.getElementById('remove-input').addEventListener('click', removeInputElement);
     document.getElementById('search_bar').addEventListener('input', updateSearchResults);
     loadFilters();
     var message = {type: "check-loaded", done: false};

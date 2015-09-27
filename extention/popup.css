@@ -27,10 +27,8 @@ html {
 
 .find-replace {
     display: inline-block;
-    margin-left: 2.5px;
-    margin-right: 2.5px;
-    margin-top: 2.5px;
-    width: 133px;
+    margin: 2.5px;
+    width: 135px;
 }
 
 #name-div {
@@ -45,7 +43,7 @@ html {
 
 .button-div {
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 2.5px;
 }
 
 .search-result {

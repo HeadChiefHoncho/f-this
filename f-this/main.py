@@ -22,6 +22,20 @@ class CreateFilterHandler(webapp2.RequestHandler):
         name = mappings['name']
         find = mappings['find']
         replace = mappings['replace']
+        valid = False
+        badNumbers = []
+        for i in xrange(len(find)):
+            if(find[i] != "" or replace[i] != ""):
+                valid = True
+            else:
+                badNumbers.append(i)
+        if (not valid):
+            self.response.set_status(400)
+            return
+        badNumbers.reverse()
+        for number in badNumbers:
+            find.pop(number)
+            replace.pop(number)
         f = ndb.Key(Filter, name).get()
         if (f == None and find != "" and name != ""):
             f2 = Filter(name=name, find=find, replace=replace, id=name)
@@ -29,7 +43,6 @@ class CreateFilterHandler(webapp2.RequestHandler):
             self.response.write(name);
         else:
             self.response.set_status(400)
-            self.response.write("YOU FOOL! 400")
 
 class GetFilterHandler(webapp2.RequestHandler):
     def get(self):
