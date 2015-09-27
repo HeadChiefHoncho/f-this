@@ -1,3 +1,5 @@
+var filterNames = [];
+
 // ----------------------------
 //     FILTER APPLICATION
 // ----------------------------
@@ -68,6 +70,7 @@ var onCreateFilterSuccess = function(newFilter) {
     var entry = document.createElement("li");
     entry.appendChild(document.createTextNode(newFilter));
     searchResultList.appendChild(entry);
+    filterNames.push(newFilter);
 }
 
 // ----------------------------
@@ -90,9 +93,20 @@ var populateSearchResults = function(list) {
         div.appendChild(document.createTextNode(list[l]));
         entry.appendChild(div);
         searchResultList.appendChild(entry);
-
+        filterNames.push(list[l]);
         div.addEventListener('click', getOnFilterSelected(list[l]));
     }
+}
+
+var updateSearchResults = function() {
+    var searchTerm = document.getElementById('search_bar').value;
+    var searchResults = [];
+    for (var l in filterNames) {
+        if (filterNames[l].indexOf(searchTerm) >= 0) {
+            searchResults.push(filterNames[l]);
+        }
+    }
+    populateSearchResults(searchResults);
 }
 
 // ----------------------------
@@ -125,6 +139,7 @@ window.onload = function() {
     document.getElementById('revert').addEventListener('click', revert);
     document.getElementById('create_tab').addEventListener('click', showCreateTab);
     document.getElementById('search_tab').addEventListener('click', showSearchTab);
+    document.getElementById('search_button').addEventListener('click', updateSearchResults);
     loadFilters();
     var message = {type: "check-loaded", done: false};
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
