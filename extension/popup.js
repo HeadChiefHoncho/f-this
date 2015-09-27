@@ -77,8 +77,14 @@ var onCreateFilterSuccess = function(newFilter) {
     console.log("success");
     document.getElementById('name').style.borderColor = null;
     var searchResultList = document.getElementById("search_result_list");
-    var entry = document.createElement("li");
+    var entry = document.createElement("button");
+    var div = document.createElement("div");
+    div.className = "search-result";
+    entry.className = "btn btn-xs btn-custom";
     entry.appendChild(document.createTextNode(newFilter));
+    div.appendChild(entry);
+    searchResultList.appendChild(div);
+    entry.addEventListener('click', getOnFilterSelected(newFilter));
     searchResultList.appendChild(entry);
     filterNames.push(newFilter);
 }
