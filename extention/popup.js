@@ -1,34 +1,43 @@
 var filterNames = [];
 
+var findInputs = [];
+var replaceInputs = [];
+
 // ----------------------------
 //     FILTER APPLICATION
 // ----------------------------
 
-var preview = function() {
-    var find = document.getElementById("find").value;
-    var replace = document.getElementById("replace").value;
-    findAndReplace(find, replace);
+var createFilter = function() {
+    name = document.getElementById("name").value;
+    find = [];
+    replace = [];
+    for (var i in findInputs){
+        find.push(findInputs[i].value);
+        replace.push(replaceInputs[i].value);
+    }
+    return {"name": name, "find": find, "replace": replace};
 }
 
-var useSelectedFilter = function(data) {
-    findAndReplace(data.find, data.replace);
+var preview = function() {
+    findAndReplace(createFilter());
+}
+
+var useSelectedFilter = function(filter) {
+    findAndReplace(filter);
 }
 
 var getOnFilterSelected = function(f) {
     return function() {
-        var filter = f;
+        var filterName = f;
         console.log("filter selected");
-        $.get("http://f-this.appspot.com/getFilter?name=" + filter, "", useSelectedFilter, "json");
+        $.get("http://f-this.appspot.com/getFilter?name=" + filterName, "", useSelectedFilter, "json");
     }
 }
 
-var findAndReplace = function(find, replace) {
+var findAndReplace = function(filter) {
     var message = {
             type: "find-and-replace",
-            data: {
-                find: find,
-                replace: replace
-            }
+            filter: filter
         }
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, message);
@@ -49,14 +58,12 @@ var revert = function() {
 // ----------------------------
 
 var saveFilter = function() {
-    var find = document.getElementById("find").value;
-    var replace = document.getElementById("replace").value;
-    var name = document.getElementById("name").value;
-    var url = "http://f-this.appspot.com/createFilter?name=" + name + "&find=" + find + "&replace=" + replace;
+    var filter = createFilter();
+    var url = "http://f-this.appspot.com/createFilter";
     $.ajax({
         type: "POST",
         url: url,
-        data: "",
+        data: filter,
         success: onCreateFilterSuccess,
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             document.getElementById('name').style.borderColor = "red";
@@ -136,7 +143,35 @@ var enableUI = function() {
     document.getElementById('revert').disabled = false;
 }
 
+var addInputElement = function() {
+    var findReplaceItem = document.createElement('div');
+    findReplaceItem.className = "find-replace-item";
+    var findReplace = document.createElement('div');
+    findReplace.className = "find-replace";
+    var find = document.createElement('input');
+    find.type = "text";
+    find.id = "find_" + replaceInputs.length;
+    var replace = document.createElement('input');
+    replace.type = "text";
+    replace.id = "replace_" + replaceInputs.length;
+    findReplace.appendChild(find);
+    findReplace.appendChild(replace);
+    findReplaceItem.appendChild(findReplace);
+
+    findInputs.push(find);
+    replaceInputs.push(replace);
+    document.getElementById("find-replace-inputs").appendChild(findReplaceItem);
+}
+
+var removeInputElement = function() {
+    var container = document.getElementById("find-replace-inputs");
+    container.removeChild(container.childNodes[-1]);
+    findInputs.pop();
+    replaceInputs.pop();
+}
+
 window.onload = function() {
+    addInputElement();
     showCreateTab();
     document.getElementById('save').addEventListener('click', saveFilter);
     document.getElementById('preview').addEventListener('click', preview);

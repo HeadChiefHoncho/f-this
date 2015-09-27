@@ -4,8 +4,8 @@ from google.appengine.ext import ndb
 
 class Filter(ndb.Model):
     name = ndb.StringProperty()
-    find = ndb.StringProperty()
-    replace = ndb.StringProperty()
+    find = ndb.StringProperty(repeated=True)
+    replace = ndb.StringProperty(repeated=True)
 
 class GetFiltersHandler(webapp2.RequestHandler):
     def get(self):
@@ -18,9 +18,10 @@ class GetFiltersHandler(webapp2.RequestHandler):
 
 class CreateFilterHandler(webapp2.RequestHandler):
     def post(self):
-        name = self.request.get("name")
-        find = self.request.get("find")
-        replace = self.request.get("replace")
+        mappings = json.loads(self.request.body)
+        name = mappings['name']
+        find = mappings['find']
+        replace = mappings['replace']
         f = ndb.Key(Filter, name).get()
         if (f == None and find != "" and name != ""):
             f2 = Filter(name=name, find=find, replace=replace, id=name)

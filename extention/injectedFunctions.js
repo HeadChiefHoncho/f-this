@@ -4,11 +4,13 @@
 
 var originalBody;
 
-function findAndReplace(find, replace) {
+function findAndReplace(filter) {
     revert();
     var root = document.body;
-    var findRegex = new RegExp(find);
-    replaceText(findRegex, replace, root);
+    for (i in filter.find) {
+        var findRegex = new RegExp(filter.find[i]);
+        replaceText(findRegex, filter.replace[i], root);
+    }
 }
 
 function revert() {
@@ -30,11 +32,11 @@ function replaceText(findRegex, replace, node) {
 // ----------------------------
 
 $(document).ready(function() {
-   originalBody = document.body.cloneNode(true);
-   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    originalBody = document.body.cloneNode(true);
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         switch(request.type) {
             case "find-and-replace":
-                findAndReplace(request.data.find, request.data.replace);
+                findAndReplace(request.filter);
                 break;
             case "check-loaded":
                 sendResponse({type: "check-loaded", done: true});
