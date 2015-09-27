@@ -92,13 +92,14 @@ var populateSearchResults = function(list) {
         searchResultList.removeChild(searchResultList.firstChild);
     }
     for (var l in list) {
-        var entry = document.createElement("li");
+        var entry = document.createElement("button");
         var div = document.createElement("div");
         div.className = "search-result";
-        div.appendChild(document.createTextNode(list[l]));
-        entry.appendChild(div);
-        searchResultList.appendChild(entry);
-        div.addEventListener('click', getOnFilterSelected(list[l]));
+        entry.className = "btn btn-xs btn-custom";
+        entry.appendChild(document.createTextNode(list[l]));
+        div.appendChild(entry);
+        searchResultList.appendChild(div);
+        entry.addEventListener('click', getOnFilterSelected(list[l]));
     }
 }
 
@@ -119,15 +120,23 @@ var updateSearchResults = function() {
 var showCreateTab = function() {
     var createPanel = document.getElementById('create_panel');
     var searchPanel = document.getElementById('search_panel');
+    var createTab = document.getElementById('create_tab');
+    var searchTab = document.getElementById('search_tab');
     createPanel.style.display = "block";
     searchPanel.style.display = "none";
+    createTab.className = "active";
+    searchTab.className = "";
 }
 
 var showSearchTab = function() {
     var createPanel = document.getElementById('create_panel');
     var searchPanel = document.getElementById('search_panel');
+    var createTab = document.getElementById('create_tab');
+    var searchTab = document.getElementById('search_tab');
     createPanel.style.display = "none";
     searchPanel.style.display = "block";
+    createTab.className = "";
+    searchTab.className = "active";
 }
 
 var enableUI = function() {

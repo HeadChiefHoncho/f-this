@@ -1,0 +1,59 @@
+#container {
+    height: 300px;
+    width: 300px;
+    max-height: 300px;
+    margin: 10px;
+}
+
+body {
+    height: 300px;
+    width: 300px;
+}
+
+html {
+    height: 300px;
+    width: 300px;
+}
+
+.btn-custom {
+    color: #fff;
+    background-color: #caf;
+    border-color: #639;
+}
+
+.link {
+    color: #639;
+}
+
+.find-replace {
+    display: inline-block;
+    margin-left: 2.5px;
+    margin-right: 2.5px;
+    margin-top: 2.5px;
+    width: 133px;
+}
+/*
+.find-replace-item {
+    margin-left: 10px;
+    margin-right: 10px;
+}*/
+
+#name-div {
+    margin: 2.5px;
+    margin-top: 5px;
+    width: 275px;
+}
+
+#button-container-div {
+    margin: 0 auto;
+}
+
+.button-div {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.search-result {
+    display: inline-block;
+    margin: 2.5px;
+}
