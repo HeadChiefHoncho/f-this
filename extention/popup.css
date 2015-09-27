@@ -32,11 +32,6 @@ html {
     margin-top: 2.5px;
     width: 133px;
 }
-/*
-.find-replace-item {
-    margin-left: 10px;
-    margin-right: 10px;
-}*/
 
 #name-div {
     margin: 2.5px;
@@ -45,7 +40,7 @@ html {
 }
 
 #button-container-div {
-    margin: 0 auto;
+    margin: 2.5px;
 }
 
 .button-div {
@@ -56,4 +51,13 @@ html {
 .search-result {
     display: inline-block;
     margin: 2.5px;
+}
+
+#search_results {
+    margin-top: 2.5px;
+}
+
+#search_panel {
+    width: 280px;
+    margin-top: 5px;
 }
