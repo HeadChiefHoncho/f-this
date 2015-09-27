@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="popup.css">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <div id="navbar">
-        <div class="tab" id="create_tab">
-            <p>hallo i am create</p>
+    <div id="container">
+      <ul class="nav nav-tabs" role="tablist" id="navbar">
+          <li class="active" role="presentation" id="create_tab">
+              <a class="link" href="#">Create</a>
+          </li>
+          <li role="presentation" id="search_tab">
+              <a class="link" href="#">Search</a>
+          </li>
+      </ul>
+      <div id="create_panel">
+        <div id="name-div">
+          <input id="name" type="text" placeholder="name" class="form-control"/>
         </div>
-        <div class="tab" id="search_tab">
-            <p>hallo i am search</p>
+        <div id="find-replace-inputs">
+          <div class="find-replace-item">
+            <div class="find-replace">
+              <input id="find" type="text" placeholder="find" class="form-control"/>
+            </div>
+            <div class="find-replace">
+              <input id="replace" type="text" placeholder="replace" class="form-control"/>
+            </div>
+          </div>
         </div>
-    </div>
-    <div id="create_panel">
-        <input id="find" type="text" placeholder="find"/>
-        <input id="replace" type="text" placeholder="replace"/>
-        <input id="name" type="text" placeholder="name"/>
-        <button id="preview" disabled="true">Preview</button>
-        <button id="save" disabled="true">Save</button>
-        <button id="revert" disabled="true">Revert</button>
-    </div>
-    <div id="search_panel">
-        <input type="text" id="search_bar">
+        <div id="button-container-div">
+          <div class="button-div">
+            <button type="button" class="btn btn-sm btn-custom" id="preview" disabled="true">Preview</button>
+          </div>
+          <div class="button-div">
+            <button type="button" class="btn btn-sm btn-custom" id="save" disabled="true">Save</button>
+          </div>
+            <div class="button-div">
+          <button type="button" class="btn btn-sm btn-custom" id="revert" disabled="true">Revert</button>
+          </div>
+        </div>
+      </div>
+      <div id="search_panel">
+        <input type="text" id="search_bar" placeholder="search" class="form-control"/>
         <div id="search_results">
-            <ul id="search_result_list"></ul>
+          <div id="search_result_list" class="list-group">
+          </div>
         </div>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="jquery-2.1.4.js"></script>
   <script type="text/javascript" src="popup.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 </html>
